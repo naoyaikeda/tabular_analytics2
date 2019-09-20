@@ -1,0 +1,1 @@
+docker build -t nikeda/tabular_analytics2:0.0.1 .
