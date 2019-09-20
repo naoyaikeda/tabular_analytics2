@@ -85,8 +85,8 @@ RUN R -e "install.packages('pcalg', dependencies=TRUE, repos='http://cran.rstudi
 RUN R -e "install.packages('CausalImpact', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "devtools::install_github('Laurae2/lgbdl')"
 RUN R -e "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'uuid', 'digest'), dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
-    R -e "devtools::install_github(‘IRkernel/IRkernel’)" && \
-    R -e "IRkernel::installspec()"
+    R -e "devtools::install_github('IRkernel/IRkernel')" && \
+    R -e "IRkernel::installspec(user = FALSE)"
 
 RUN cd /root && \
     git clone --recursive https://github.com/microsoft/LightGBM && \
@@ -94,7 +94,7 @@ RUN cd /root && \
     Rscript build_r.R
 
 RUN pip install optuna && \
-RUN pip install rpy2
+    pip install rpy2
 
 RUN curl -L  "https://oscdl.ipa.go.jp/IPAexfont/ipaexg00301.zip" > font.zip && \
     unzip font.zip && \
