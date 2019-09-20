@@ -20,9 +20,9 @@ RUN echo "now building..." && \
     conda install -y python=3.6 rise pyodbc pymssql -y && \
     jupyter-nbextension install rise --py --sys-prefix && \
     jupyter-nbextension enable rise --py --sys-prefix && \
-    conda install -y -c anaconda mysql-connector-python psycopg2 && \
+    conda install -y -c anaconda mysql-connector-python psycopg2 bokeh pillow pytz patsy python-dateutil networkx pygraphviz cython sphinx && \
     conda install -y -c h2oai h2o && \
-    conda install -y -c conda-forge xgboost lightgbm fbprophet lime shap && \
+    conda install -y -c conda-forge xgboost lightgbm fbprophet lime shap plotly tqdm chardet pulp python-igraph && \
     wget https://mran.blob.core.windows.net/install/mro/3.5.3/ubuntu/microsoft-r-open-3.5.3.tar.gz && \
     tar -xf microsoft-r-open-3.5.3.tar.gz && \
     cd microsoft-r-open/ && \
@@ -42,12 +42,23 @@ RUN cd /root && \
     wget https://julialang-s3.julialang.org/bin/linux/x64/1.2/julia-1.2.0-linux-x86_64.tar.gz && \
     tar xzf julia-1.2.0-linux-x86_64.tar.gz -C /opt
 
+RUN cd /root && \
+    julia -e 'import Pkg; Pkg.update()' && \
+    julia -e 'import Pkg; Pkg.add("HDF5")') && \
+    julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \ 
+    mv /root/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+    chmod -R go+rx $CONDA_DIR/share/jupyter && \
+    rm -rf /root/.local
+
 RUN ln -fs /opt/julia-1.2.0/bin/julia /usr/local/bin/julia
 
 RUN R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('RCurl', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('RODBC', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('glmnet', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('rpart', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('randomForest', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('cluster', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('e1071', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('flexmix', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('mclust', dependencies=TRUE, repos='http://cran.rstudio.com/')"
@@ -58,6 +69,8 @@ RUN R -e "install.packages('kernlab', dependencies=TRUE, repos='http://cran.rstu
 RUN R -e "install.packages('Spectrum', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('xgboost', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('tidyverse', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('tseries', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('tseriesChaos', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('survival', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('fitdistrplus', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('ggplot2', dependencies=TRUE, repos='http://cran.rstudio.com/')"
@@ -71,6 +84,7 @@ RUN R -e "install.packages('Matrix', dependencies=TRUE, repos='http://cran.rstud
 RUN R -e "install.packages('lme4', dependencies=TRUE, repos='http://cran.rstudio.com')"
 RUN R -e "install.packages('h2o', dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN R -e "install.packages('nnet', dependencies=TRUE, repos='http://cran.rstudio.com/')" 
+RUN R -e "install.packages('lime', dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN R -e "install.packages('RUnit', dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN R -e "install.packages('BiocManager', dependencies=TRUE, repos='http://cran.rstudio.com/')" 
 RUN R -e "install.packages('reticulate', dependencies=TRUE, repos='http://cran.rstudio.com/')"
@@ -86,6 +100,7 @@ RUN R -e "install.packages('bsts', dependencies=TRUE, repos='http://cran.rstudio
 RUN R -e "install.packages('pcalg', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('CausalImpact', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "devtools::install_github('Laurae2/lgbdl')"
+RUN R -e "devtools::install_github('rstudio/r2d3')"
 RUN R -e "install.packages(c('repr', 'IRdisplay', 'evaluate', 'crayon', 'pbdZMQ', 'uuid', 'digest'), dependencies=TRUE, repos='http://cran.rstudio.com/')" && \
     R -e "devtools::install_github('IRkernel/IRkernel')" && \
     R -e "IRkernel::installspec(user = FALSE)"
@@ -96,7 +111,9 @@ RUN cd /root && \
     Rscript build_r.R
 
 RUN pip install optuna && \
-    pip install rpy2
+    pip install rpy2 && \
+    pip install pyunicorn && \
+    pip install pyflux
 
 RUN curl -L  "https://oscdl.ipa.go.jp/IPAexfont/ipaexg00301.zip" > font.zip && \
     unzip font.zip && \
