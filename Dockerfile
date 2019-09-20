@@ -20,6 +20,7 @@ RUN echo "now building..." && \
     conda install -y python=3.6 rise pyodbc pymssql -y && \
     jupyter-nbextension install rise --py --sys-prefix && \
     jupyter-nbextension enable rise --py --sys-prefix && \
+    conda install -y -c anaconda mysql-connector-python psycopg2 && \
     conda install -y -c h2oai h2o && \
     conda install -y -c conda-forge xgboost lightgbm fbprophet lime shap && \
     wget https://mran.blob.core.windows.net/install/mro/3.5.3/ubuntu/microsoft-r-open-3.5.3.tar.gz && \
