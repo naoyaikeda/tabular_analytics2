@@ -5,17 +5,18 @@ COPY azcopy_linux_amd64_10.2.1/azcopy /usr/local/bin
 ENV ACCEPT_EULA=Y
 ENV TMPDIR=/tmp
 RUN echo "now building..." && \
-
     cd /root && \
     apt update && \
     apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev && \
     apt install -y lsb-release build-essential libssl-dev libc6-dev libicu-dev apt-file libxrender1 && \
     apt install -y texlive-latex-base texlive-latex-extra texlive-fonts-extra texlive-fonts-recommended texlive-generic-recommended && \
     apt install -y fonts-ipafont-gothic fonts-ipafont-mincho && \
+    apt clean && \
     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - && \
     curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list && \
     apt update && \
     apt install -y vim openjdk-11-jdk libv8-3.14-dev libxml2-dev libcurl4-openssl-dev libssl-dev unixodbc freetds-bin freetds-common tdsodbc unixodbc-dev mssql-tools && \
+    apt clean && \
     conda update -n base -c defaults conda -y && \
     conda install -y python=3.6 rise pyodbc pymssql -y && \
     jupyter-nbextension install rise --py --sys-prefix && \
@@ -44,7 +45,7 @@ RUN cd /root && \
 
 RUN cd /root && \
     julia -e 'import Pkg; Pkg.update()' && \
-    julia -e 'import Pkg; Pkg.add("HDF5")') && \
+    julia -e 'import Pkg; Pkg.add("HDF5")' && \
     julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \ 
     mv /root/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
