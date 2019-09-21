@@ -43,15 +43,15 @@ RUN cd /root && \
     wget https://julialang-s3.julialang.org/bin/linux/x64/1.2/julia-1.2.0-linux-x86_64.tar.gz && \
     tar xzf julia-1.2.0-linux-x86_64.tar.gz -C /opt
 
+RUN ln -fs /opt/julia-1.2.0/bin/julia /usr/local/bin/julia
+
 RUN cd /root && \
     julia -e 'import Pkg; Pkg.update()' && \
     julia -e 'import Pkg; Pkg.add("HDF5")' && \
     julia -e "using Pkg; pkg\"add IJulia\"; pkg\"precompile\"" && \ 
-    mv /root/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
+    mv /home/jovyan/.local/share/jupyter/kernels/julia* $CONDA_DIR/share/jupyter/kernels/ && \
     chmod -R go+rx $CONDA_DIR/share/jupyter && \
-    rm -rf /root/.local
-
-RUN ln -fs /opt/julia-1.2.0/bin/julia /usr/local/bin/julia
+    rm -rf /home/jovyan/.local
 
 RUN R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('RCurl', dependencies=TRUE, repos='http://cran.rstudio.com/')"
