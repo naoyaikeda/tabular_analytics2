@@ -7,7 +7,7 @@ ENV TMPDIR=/tmp
 RUN echo "now building..." && \
     cd /root && \
     apt update && \
-    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev gsl-dev && \
+    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev libgsl-dev && \
     apt install -y lsb-release build-essential libssl-dev libc6-dev libicu-dev apt-file libxrender1 && \
     apt install -y texlive-latex-base texlive-latex-extra texlive-fonts-extra texlive-fonts-recommended texlive-generic-recommended && \
     apt install -y fonts-ipafont-gothic fonts-ipafont-mincho && \
@@ -56,6 +56,17 @@ RUN cd /root && \
 RUN R -e "install.packages('devtools', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('RCurl', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('RODBC', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('caret', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('VGAM', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('fuzzyreg', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('mgcv', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('forecast', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('beyesm', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('quantreg', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('brms', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('MCMCpack', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('dlookr', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+RUN R -e "install.packages('MLmetrics', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('glmnet', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('rpart', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('randomForest', dependencies=TRUE, repos='http://cran.rstudio.com/')"
