@@ -4,8 +4,8 @@ LABEL maintainer="Naoya Ikeda <n_ikeda@hotmail.com>"
 COPY azcopy_linux_amd64_10.2.1/azcopy /usr/local/bin
 RUN mkdir /home/jovyan/.R
 RUN mkdir /root/.R
-ADD Makevers /home/jovyan/.R
-ADD Makevers /root/.R
+ADD Makevars /home/jovyan/.R
+ADD Makevars /root/.R
 ENV ACCEPT_EULA=Y
 ENV TMPDIR=/tmp
 
@@ -18,7 +18,7 @@ ENV JULIA_VERSION=1.2.0
 RUN echo "now building..." && \
     cd /root && \
     apt update && \
-    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev libgsl-dev libunwind-dev && \
+    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev libgsl-dev libunwind-dev libgmp3-dev && \
     apt install -y lsb-release build-essential libssl-dev libc6-dev libicu-dev apt-file libxrender1 && \
     apt install -y texlive-latex-base texlive-latex-extra texlive-fonts-extra texlive-fonts-recommended texlive-generic-recommended && \
     apt install -y fonts-ipafont-gothic fonts-ipafont-mincho && \
