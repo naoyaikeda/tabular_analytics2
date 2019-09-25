@@ -18,7 +18,7 @@ ENV JULIA_VERSION=1.2.0
 RUN echo "now building..." && \
     cd /root && \
     apt update && \
-    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev libgsl-dev libunwind-dev libgmp3-dev　libfontconfig1-dev libudunits2-dev libgeos-dev && \
+    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev libgsl-dev libunwind-dev libgmp3-dev　libfontconfig1-dev libudunits2-dev libgeos-dev　libmagick++-dev && \
     apt install -y lsb-release build-essential libssl-dev libc6-dev libicu-dev apt-file libxrender1 && \
     apt install -y texlive-latex-base texlive-latex-extra texlive-fonts-extra texlive-fonts-recommended texlive-generic-recommended && \
     apt install -y fonts-ipafont-gothic fonts-ipafont-mincho && \
