@@ -18,15 +18,16 @@ ENV JULIA_VERSION=1.2.0
 RUN echo "now building..." && \
     cd /root && \
     apt update && \
-    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev libgsl-dev libunwind-dev libgmp3-dev && \
+    apt install -y git gnupg curl wget cmake gfortran unzip libsm6 pandoc libjpeg-dev libgsl-dev libunwind-dev libgmp3-dev　libfontconfig1-dev libudunits2-dev libgeos-dev && \
     apt install -y lsb-release build-essential libssl-dev libc6-dev libicu-dev apt-file libxrender1 && \
     apt install -y texlive-latex-base texlive-latex-extra texlive-fonts-extra texlive-fonts-recommended texlive-generic-recommended && \
     apt install -y fonts-ipafont-gothic fonts-ipafont-mincho && \
+    apt install -y vim openjdk-11-jdk libv8-3.14-dev libxml2-dev libcurl4-openssl-dev libssl-dev && \
     apt clean && \
     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - && \
     curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list && \
     apt update && \
-    apt install -y vim openjdk-11-jdk libv8-3.14-dev libxml2-dev libcurl4-openssl-dev libssl-dev unixodbc freetds-bin freetds-common tdsodbc unixodbc-dev mssql-tools && \
+    apt install -y  unixodbc freetds-bin freetds-common tdsodbc unixodbc-dev mssql-tools && \
     apt clean && \
     conda update -n base -c defaults conda -y && \
     conda install -y python=3.6 rise pyodbc pymssql -y && \
@@ -38,7 +39,8 @@ RUN echo "now building..." && \
     wget https://mran.blob.core.windows.net/install/mro/3.5.3/ubuntu/microsoft-r-open-3.5.3.tar.gz && \
     tar -xf microsoft-r-open-3.5.3.tar.gz && \
     cd microsoft-r-open/ && \
-    ./install.sh -a -u
+    ./install.sh -a -u && \
+    apt clean
 
 RUN cd /root && \
     ln -s /usr/include/locale.h /usr/include/xlocale.h && \
