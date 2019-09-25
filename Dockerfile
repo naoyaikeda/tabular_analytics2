@@ -23,6 +23,7 @@ RUN echo "now building..." && \
     apt install -y texlive-latex-base texlive-latex-extra texlive-fonts-extra texlive-fonts-recommended texlive-generic-recommended && \
     apt install -y fonts-ipafont-gothic fonts-ipafont-mincho && \
     apt install -y vim default-jdk libv8-3.14-dev libxml2-dev libcurl4-openssl-dev libssl-dev && \
+    apt install -y xorg libx11-dev libglu1-mesa-dev libfreetype6-dev && \
     apt clean && \
     curl https://packages.microsoft.com/keys/microsoft.asc | sudo apt-key add - && \
     curl https://packages.microsoft.com/config/ubuntu/18.04/prod.list | sudo tee /etc/apt/sources.list.d/msprod.list && \
