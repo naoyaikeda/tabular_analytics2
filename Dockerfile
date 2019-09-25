@@ -73,7 +73,7 @@ RUN R -e "install.packages('RCurl', dependencies=TRUE, repos='http://cran.rstudi
 RUN R -e "install.packages('RODBC', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('caret', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('VGAM', dependencies=TRUE, repos='http://cran.rstudio.com/')"
-RUN R -e "install.packages('fuzzyreg', dependencies=TRUE, repos='http://cran.rstudio.com/')"
+＃RUN R -e "install.packages('fuzzyreg', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('mgcv', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('forecast', dependencies=TRUE, repos='http://cran.rstudio.com/')"
 RUN R -e "install.packages('beyesm', dependencies=TRUE, repos='http://cran.rstudio.com/')"
