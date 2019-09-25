@@ -3,6 +3,7 @@ USER root
 LABEL maintainer="Naoya Ikeda <n_ikeda@hotmail.com>"
 COPY azcopy_linux_amd64_10.2.1/azcopy /usr/local/bin
 RUN mkdir /home/jovyan/.R
+RUN mkdir /root/.R
 ADD Makevers /home/jovyan/.R
 ADD Makevers /root/.R
 ENV ACCEPT_EULA=Y
