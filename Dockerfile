@@ -15,6 +15,9 @@ ENV JULIA_DEPOT_PATH=/opt/julia
 ENV JULIA_PKGDIR=/opt/julia
 ENV JULIA_VERSION=1.2.0
 
+# Java enviroments
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+
 RUN echo "now building..." && \
     cd /root && \
     apt update && \
